@@ -1,8 +1,7 @@
-import javax.swing.*;
-import java.io.*;                 
+import java.io.*;
+// "throws IOException" needed for methods that do file IO or call other methods that do
 public class FILEREAD
 {
-
     // parameter is the name of the text file (CSV) to be read
     public  String readCSVfile(String fileName) throws IOException {
         // set aside storage for 5000 characters from a text file

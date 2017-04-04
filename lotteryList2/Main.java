@@ -1,24 +1,24 @@
 import java.util.*;
 import java.io.*;
+// "throws IOException" needed for methods that do file IO or call other methods that do
 
-// final version with file i/o
 class Main {
 
+    // file read and write objects
+    FILEREAD fileLoader = new FILEREAD();
     WRITEFILE fileSaver = new WRITEFILE();
 
-    // optional file input
-    FILEREAD fileLoader = new FILEREAD();
-
-    // data structure for storing csv file data as objects
+    // data structure to store csv file data in array of objects
+    // each object stores one "row"
     POSTALAREA postalAreaList[]; 
 
     public void importfileRowList() throws IOException
     {
         // read file contents, store returned value as a single string
         String fileData = fileLoader.readCSVfile("postcodeData.csv");
-        // use-remove line-breaks, split file string into rows, store into array of strings 
+        // use-remove line-breaks("\r\n"), split file string into rows, store into array of strings 
         String[] fileRowList = fileData.split("\r\n");
-        // store how many rows were stored (size of array)
+        // store how many rows were returned (size of array)
         int noOfPostRows = fileRowList.length;
         // create array, an element for each file row
         postalAreaList = new POSTALAREA[noOfPostRows];
@@ -47,26 +47,17 @@ class Main {
         System.out.println("Max players is: " + maxPlayers);
     }
 
-    // not yet implemented
-    public void countPlayers() {
-
-    }
-
-    // not yet implemented
-    public void findPostCode() {
-
-    }
-
     public void exportGlasgowRows()  throws IOException
     {
         // to gather the text for file export
         String fileContent = "";
 
-        // headings
+        // join column headings on to end of file content
         fileContent = fileContent + "PostCode" + "," + "Players";
-        // get string of data from list of objects
-        for (int i = 0; i<postalAreaList.length; i++) {
-            // decide if this row is to be exported (Glasgow code start with G)
+        
+        // get strings of row data from each object in the list of objects
+        for (int i = 0; i < postalAreaList.length; i++) {
+            // decide if this row is to be exported (Glasgow codes start with G)
             if (((postalAreaList[i].getPostCode()).substring(0,1)).equals("G")) {
                 // add newline before actual row data
                 fileContent = fileContent + "\n";
@@ -78,7 +69,6 @@ class Main {
         fileSaver.writeCSVfile("winners.csv", fileContent);
     }
 
-    // demo: combined demos into a single method
     public void displayPrizes() {
         // start the prize money at 0
         int totalPrize = 0;
@@ -87,33 +77,28 @@ class Main {
             // decide if this is a Glasgow postcode
             if (((nextPostalArea.getPostCode()).substring(0,1)).equals("G")) {
                 // increased prize money
-                totalPrize += 1100;
-                // calculate the share of the prize
-                nextPostalArea.sharePrize(1100);
+                totalPrize = totalPrize + 1100;
             }
             else
             {
                 // normal prize money
-                totalPrize += 1000;
-                nextPostalArea.sharePrize(1000);
+                totalPrize = totalPrize + 1000;
             }
         }
+        // output result to display
         System.out.println("Total prize: " + totalPrize);
     }
 
     // top level algorithm
     public void processPostCode()   throws IOException 
     { 
-
-        // enter data from file
+        // import data from file
         importfileRowList();
-        // process data using standard algorithms
+        // calculate most players using standard algorithm
         findMaxPlayers();
-        countPlayers();
-        findPostCode();
-        // output results
+        // calculate prize money
         displayPrizes();
-        // save data
+        // export selected data
         exportGlasgowRows();
     }
 
