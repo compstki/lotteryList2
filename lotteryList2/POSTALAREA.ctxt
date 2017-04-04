@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=POSTALAREA
+comment1.params=fileRow
+comment1.target=POSTALAREA(java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ getPostalAreaRow()
+comment3.params=
+comment3.target=int\ getPlayers()
+comment4.params=
+comment4.target=java.lang.String\ getPostCode()
+comment5.params=
+comment5.target=java.lang.String\ getPostCodeZone()
+comment6.params=prizeFund
+comment6.target=void\ sharePrize(int)
+numComments=7
